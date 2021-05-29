@@ -17,6 +17,7 @@ class AdminController extends Controller
     }
 
     public function accProduk($id){
+        
         $products = Product::find($id);
 
         $nik = AnggotaKeluarga::max('nik');

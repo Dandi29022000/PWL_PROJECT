@@ -1,16 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KategoriController;
-// use App\Http\Controllers\ContactController;
-// use App\Http\Controllers\CustomerController;
-// use App\Http\Controllers\MenuController;
-// use App\Http\Controllers\ProductController;
-// use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,16 +15,20 @@ use App\Http\Controllers\KategoriController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/',[WelcomeController::class, 'index'])->name('home');
-Route::get('/home',[WelcomeController::class, 'index'])->name('home2');
-Route::get('/kontak',[WelcomeController::class, 'kontak'])->name('kontak');
-Route::get('/produk',[ProdukController::class, 'index'])->name('user.produk');
-Route::get('/produk/cari',[ProdukController::class, 'cari'])->name('user.produk.cari');
-Route::get('/kategori/{id}', [KategoriController::class, 'produkByKategori'])->name('user.kategori');
-Route::get('/produk/{id}', [ProdukController::class, 'detail'])->name('user.produk.detail');
-
-Route::get('/pelanggan',function(){
-    return 'Pelanggan';
+Route::get('/', function () {
+    return view('home');
 });
 
+Auth::routes();
+
+Route::resource('produk', ProdukController::class)->middleware('auth');
+Route::prefix('admin')->middleware('auth')->group(function(){
+    Route::get('/produk', [AdminController::class, 'produk'])->name('admin.produk');
+    Route::get('/produk/{id}', [AdminController::class, 'accProduk'])->name('admin.acc-produk');
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('logout', [Auth::class, 'logout'], function () {
+    return abort(404);
+});

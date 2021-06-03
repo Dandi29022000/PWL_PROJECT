@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use PDF;
+
 class ProdukController extends Controller
 {
     /**
@@ -19,7 +21,7 @@ class ProdukController extends Controller
                 if (($term = $request->term)) {
                     $query->orWhere('name','LIKE','%'.$term.'%')
                           ->orWhere('description','LIKE','%'.$term.'%')
-                          ->orWhere('weight','LIKE','%'.$term.'%')
+                          ->orWhere('weigth','LIKE','%'.$term.'%')
                           ->orWhere('price','LIKE','%'.$term.'%')->get();
                 }
             }]
@@ -27,7 +29,7 @@ class ProdukController extends Controller
         ->orderBy('id','asc')
         ->simplePaginate(5);
         
-        return view('products.index' , compact('products'))
+        return view('produk.index' , compact('products'))
         ->with('i',(request()->input('page',1)-1)*5);
     }
 
@@ -38,7 +40,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('produk.create');
     }
 
     /**
@@ -49,20 +51,25 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->file('image')){
+            $image_name = $request->file('image')->store('images', 'public');
+        }
+
         // Melakukan validasi data
         $request->validate([
             'id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'image' => 'required',
-            'weight' => 'required',
+            'price' => 'required',
+            'weigth' => 'required',
         ]);
 
         // Fungsi eloquent untuk menambah data
         Product::create($request->all());
 
         // Jika data berhasil ditambahkan, akan kembali ke halaman utama
-        return redirect()->route('products.index')
+        return redirect()->route('produk.index')
             ->with('success', 'Produk Berhasil Ditambahkan');
     }
 
@@ -76,7 +83,7 @@ class ProdukController extends Controller
     {
         // Menampilkan detail data dengan menemukan/berdasarkan id_barang
         $Product = Product::find($id);
-        return view('products.detail', compact('Product'));
+        return view('produk.detail', compact('Product'));
     }
 
     /**
@@ -89,7 +96,7 @@ class ProdukController extends Controller
     {
         // Menampilkan detail data dengan menemukan berdasarkan Nim Mahasiswa untuk diedit
         $Product = Product::find($id);
-        return view('products.edit', compact('Product'));
+        return view('produk.edit', ['Product' => $Product]);
     }
 
     /**
@@ -107,14 +114,22 @@ class ProdukController extends Controller
             'name' => 'required',
             'description' => 'required',
             'image' => 'required',
-            'weight' => 'required',
+            'price' => 'required',
+            'weigth' => 'required',
         ]);
 
         // Fungsi eloquent untuk mengupdate data inputan kita
-        Product::find($id)->update($request->all());
+        $products = Product::find($id)->update($request->all());
+        
+        if($products->image && file_exists(storage_path('app/public/' . $products->image))){
+            \Storage::delete('public/' . $products->image);
+        }
+
+        $image_name = $request->file('image')->store('images', 'public');
+        $products->image = $image_name;
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
-        return redirect()->route('products.index')
+        return redirect()->route('produk.index')
             ->with('success', 'Produk Berhasil Diupdate');
     }
 
@@ -128,7 +143,13 @@ class ProdukController extends Controller
     {
         // Fungsi eloquent untuk menghapus data
         Product::find($id)->delete();
-        return redirect()->route('products.index')
+        return redirect()->route('produk.index')
             -> with('success', 'Produk Berhasil Dihapus');
+    }
+
+    public function cetak_pdf(){
+        $products = Product::all();
+        $pdf = PDF::loadview('produk.produk_pdf', ['products'=>$products]);
+        return $pdf->stream();
     }
 }

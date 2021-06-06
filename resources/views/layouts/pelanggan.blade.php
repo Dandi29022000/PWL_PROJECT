@@ -7,13 +7,13 @@
         </div>
     </div>
     <div class="col-lg-12 tm-popular-items-container">
-        @foreach($anggotas as $anggota)
+        @foreach($pelanggan as $pelanggan)
         <div class="tm-popular-item">
-            <img src="img/{{$anggota -> foto}}" alt="Popular" class="tm-popular-item-img" width="97.5%">
+            <img src="img/{{$pelanggan -> gambar}}" alt="Popular" class="tm-popular-item-img" width="97.5%">
             <div class="tm-popular-item-description">
                 <h3 class="tm-handwriting-font tm-popular-item-title">{{$anggota -> nama}}</h3>
                 <hr class="tm-popular-item-hr">
-                <p>Kelas : TI 2D<br>NIM : {{$anggota -> nim}}<br>No. Absen : {{$anggota -> absen}}</p>
+                <p>Nama Pelanggan : {{$pelanggan -> nama_pelanggan}}<br>Alamat : {{$pelanggan -> alamat}}<br>No Telp : {{$pelanggan -> no_telepon}}</p>
                 <div class="order-now-container">
                     <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
                 </div>

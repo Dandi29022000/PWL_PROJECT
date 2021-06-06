@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Petugas extends Model
 {
     use HasFactory;
+    public static function petugas(){
+        return Petugas::all();
+    }
 }

@@ -12,7 +12,7 @@
                 <nav class="tm-nav">
                     <ul>
                         <li><a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
-                        <li><a href="/customer" class="{{ Request::is('customer') ? 'active' : '' }}">Customer</a></li>
+                        <li><a href="/pelanggan" class="{{ Request::is('customer') ? 'active' : '' }}">Pelanggan</a></li>
                         <li><a href="/menu" class="{{ Request::is('menu') ? 'active' : '' }}">Menu</a></li>
                         <li><a href="/contact-us" class="{{ Request::is('contact-us') ? 'active' : '' }}">Contact</a></li>
                         <li><a href="/products" class="{{ Request::is('products') ? 'active' : '' }}">Products</a></li>

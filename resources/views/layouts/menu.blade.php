@@ -12,11 +12,10 @@
                 <nav class="tm-nav">
                     <ul>
                         <li><a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Home</a></li>
-                        <li><a href="/pelanggan" class="{{ Request::is('customer') ? 'active' : '' }}">Pelanggan</a></li>
-                        <li><a href="/menu" class="{{ Request::is('menu') ? 'active' : '' }}">Menu</a></li>
-                        <li><a href="/contact-us" class="{{ Request::is('contact-us') ? 'active' : '' }}">Contact</a></li>
-                        <li><a href="/products" class="{{ Request::is('products') ? 'active' : '' }}">Products</a></li>
-                        <li><a href="/pegawai" class="{{ Request::is('pegawai') ? 'active' : '' }}">Employee</a></li>
+                        <li><a href="/pelanggan" class="{{ Request::is('pelanggan') ? 'active' : '' }}">Pelanggan</a></li>
+                        <li><a href="/produk" class="{{ Request::is('products') ? 'active' : '' }}">Produk</a></li>
+                        {{-- <li><a href="/menu" class="{{ Request::is('menu') ? 'active' : '' }}">Menu</a></li> --}}
+                        <li><a href="/petugas" class="{{ Request::is('petugas') ? 'active' : '' }}">Petugas</a></li>
                     </ul>
                 </nav>
             </div>

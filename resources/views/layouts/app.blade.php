@@ -1,61 +1,158 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cafe House Template</title>
-<!-- 
-Cafe House Template
-http://www.templatemo.com/tm-466-cafe-house
--->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/templatemo-style.css" rel="stylesheet">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  </head>
-  <body>
-    <!-- Preloader -->
-    <div id="loader-wrapper">
-      <div id="loader"></div>
-      <div class="loader-section section-left"></div>
-      <div class="loader-section section-right"></div>
-    </div>
-    <!-- End Preloader -->
-    @include('layouts.menu')
-    <section class="tm-welcome-section">
-      <div class="container tm-position-relative">
-        <div class="tm-lights-container">
-          <img src="img/light.png" alt="Light" class="light light-1">
-          <img src="img/light.png" alt="Light" class="light light-2">
-          <img src="img/light.png" alt="Light" class="light light-3">  
-        </div>        
-        <div class="row tm-welcome-content">
-          <h2 class="white-text tm-handwriting-font tm-welcome-header"><img src="img/header-line.png" alt="Line" class="tm-header-line">&nbsp;Welcome To&nbsp;&nbsp;<img src="img/header-line.png" alt="Line" class="tm-header-line"></h2>
-          <h2 class="gold-text tm-welcome-header-2">Kuis House</h2>
-          <p class="gray-text tm-welcome-description">Cafe House template is a mobile-friendly responsive <span class="gold-text">Bootstrap v3.3.5</span> layout by <span class="gold-text">templatemo</span>. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculusnec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-          <a href="#main" class="tm-more-button tm-more-button-welcome">Details</a>      
+    <title>Sistem Jual Beli OOTD</title>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="icon" href="{{ asset('images/logo.png') }}" type="image/x-icon">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/owl.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+</head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+        <div id="main">
+            <div class="inner">
+
+                <!-- Header -->
+                <header id="header">
+                    <div class="logo">
+                        <img src="{{ asset('images/logo.png') }}" alt="">
+                        <a href="{{ route('home') }}">Sistem Jual Beli OOTD</a>
+                    </div>
+                </header>
+
+                <!-- Content -->
+                <main class="py-4">
+                    @yield('content')
+                </main>
+            </div>
         </div>
-        <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">             
-      </div>      
-    </section>
-    @yield('content')
-    
-    @extends('layouts.Footer')
 
-   <!-- JS -->
-   <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
-   <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+        <!-- Sidebar -->
+        <div id="sidebar">
 
- </body>
- </html>
+            <div class="inner">
+
+                <!-- Search Box -->
+                <section id="search" class="alt">
+                    <form method="get" action="#">
+                        <input type="text" name="search" id="search" placeholder="Search..." />
+                    </form>
+                </section>
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <ul>
+                        <li><a href="{{ route('home') }}">Homepage</a></li>
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </li>
+                            @endif
+                            
+                            @elseif(Auth::user()->email == 'admin@admin.com')                     
+                            <li>
+                                <a>
+                                    {{ Auth::user()->name }}
+                                </a>
+                                <span class="opener">Pelayanan</span>
+                                <ul>
+                                    <li><a href="{{ route('produk.index') }}">Data Produk</a></li>
+                                    <li><a href="{{ route('pelanggan.index') }}">Data Pelanggan</a></li>
+                                    <li><a href="{{ route('petugas.index') }}">Data Petugas</a></li>
+                                    <li><a href="{{ route('produk_transaksi.index') }}">Data Transaksi</a></li>
+                                </ul>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>                            
+                            <!-- @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                            @endif -->
+
+                            @else
+                            <li>
+                                <a>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <a href="{{ route('admin.produk') }}">Data Produk</a>
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endguest
+                    </ul>
+                </nav>
+
+                <!-- Footer -->
+                <footer id="footer">
+                    <p class="copyright">Copyright &copy; 2021 Kelompok 8
+                        <br>PEMROGRAMAN WEB LANJUT</p>
+                </footer>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ asset('js/browser.min.js') }}"></script>
+    <script src="{{ asset('js/breakpoints.min.js') }}"></script>
+    <script src="{{ asset('js/transition.js') }}"></script>
+    <script src="{{ asset('js/owl-carousel.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+</body>
+
+</html>

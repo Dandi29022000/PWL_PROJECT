@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use PDF;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {
@@ -51,22 +53,29 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->file('image')){
-            $image_name = $request->file('image')->store('images', 'public');
-        }
-
         // Melakukan validasi data
         $request->validate([
             'id' => 'required',
             'name' => 'required',
             'description' => 'required',
-            'image' => 'required',
+            'image' => 'file|image|mimes:jpeg,png,jpg',
             'price' => 'required',
             'weigth' => 'required',
         ]);
 
         // Fungsi eloquent untuk menambah data
-        Product::create($request->all());
+        if ($request->file('image')) 
+        {
+            $image_name = $request->file('image')->store('images', 'public');
+            Product::create([
+                'id'            => $request->id,
+                'name'          => $request->name,
+                'description'   => $request->description,
+                'image'         => $image_name,
+                'price'         => $request->price,
+                'weigth'        => $request->weigth,
+            ]);
+        }
 
         // Jika data berhasil ditambahkan, akan kembali ke halaman utama
         return redirect()->route('produk.index')
@@ -119,14 +128,19 @@ class ProdukController extends Controller
         ]);
 
         // Fungsi eloquent untuk mengupdate data inputan kita
-        $products = Product::find($id)->update($request->all());
-        
-        if($products->image && file_exists(storage_path('app/public/' . $products->image))){
-            \Storage::delete('public/' . $products->image);
+        if ($request->image && file_exists(storage_path('app/public/' . $request->image)))
+        {
+            Storage::delete(['public/' .$request->image]);
         }
-
         $image_name = $request->file('image')->store('images', 'public');
-        $products->image = $image_name;
+        // Fungsi eloquent untuk mengupdate data inputan kita
+        $update = Product::find($id);
+        $update->name = $request->get('name');
+        $update->description = $request->get('description');
+        $update->image = $image_name;
+        $update->price = $price->get('price');
+        $update->weigth = $weigth->get('weigth'); 
+        $update->save();
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
         return redirect()->route('produk.index')

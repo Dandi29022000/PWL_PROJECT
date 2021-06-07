@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="banner-caption">
-                                    <h4>Selamat Datang di website <em>Sistem Jual Beli Produk</em></h4>
+                                    <h4>Selamat Datang di website <em>Sistem Jual Beli OOTD</em></h4>
                                     @guest
                                     <p>Silahkan gunakan tombol <strong>Login</strong>
                                     </p>
@@ -22,7 +22,7 @@
                                     <p>Silahkan gunakan tombol <strong>produk</strong> untuk melihat data produk!
                                     </p>
                                     <div class="primary-button">
-                                        <a href="{{ route('produk.index') }}">Keluarga</a>
+                                        <a href="{{ route('produk.index') }}">Produk</a>
                                     </div>
                                     @endif
                                 </div>

@@ -154,12 +154,17 @@ class TransaksiController extends Controller
         // Fungsi eloquent untuk menghapus data
         Produk_Transaksi::find($id)->delete();
         return redirect()->route('produk_transaksi.index')
-            -> with('success', 'Transaksi Berhasil Dihapus');
+            ->with('success', 'Transaksi Berhasil Dihapus');
     }
 
-    public function cetak_pdf(){
-        $produk_transaksi = Produk_Transaksi::all();
-        $pdf = PDF::loadview('transaksi.transaksi_pdf', ['produk_transaksi'=>$produk_transaksi]);
+    public function cetak_pdf($id){
+        // $products = Produk_Transaksi::with('produk')
+        //     ->where('produk_id', $id)
+        //     ->first();
+        $produk_transaksi = Produk_Transaksi::with('pelanggan')
+            ->where('pelanggan_id', $id)
+            ->get();
+        $pdf = PDF::loadview('produk_transaksi.transaksi_pdf', compact('produk_transaksi'));
         return $pdf->stream();
     }
 }

@@ -61,7 +61,6 @@ class TransaksiController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
-            'id' => 'required',
             'produk_id' => 'required',
             'pelanggan_id' => 'required',
             'tanggal' => 'required',
@@ -71,7 +70,15 @@ class TransaksiController extends Controller
         ]);
 
         // Fungsi eloquent untuk menambah data
-        Produk_Transaksi::create($request->all());
+        $produk_transaksi = new Produk_Transaksi;
+        $produk_transaksi->id = $request->get('id');
+        $produk_transaksi->produk_id = $request->get('produk_id');
+        $produk_transaksi->pelanggan_id = $request->get('pelanggan_id');
+        $produk_transaksi->tanggal = $request->get('tanggal');
+        $produk_transaksi->harga = $request->get('harga');
+        $produk_transaksi->qty = $request->get('qty');
+        $produk_transaksi->total_bayar = $request->get('total_bayar');
+        $produk_transaksi->save();
 
         // Jika data berhasil ditambahkan, akan kembali ke halaman utama
         return redirect()->route('produk_transaksi.index')
@@ -87,10 +94,10 @@ class TransaksiController extends Controller
     public function show($id)
     {
         // Menampilkan detail data dengan menemukan/berdasarkan id_barang
-        $Produk_Transaksi = Produk_Transaksi::with('produk')->where('id', $id)->first();
-        $Produk_Transaksi = Produk_Transaksi::with('pelanggan')->where('id_pelanggan', $id_pelanggan)->first();
-
-        return view('produk_transaksi.detail', compact('Produk_Transaksi'));
+        $Produk_Transaksi = Produk_Transaksi::with('pelanggan')->where('id', $id)->first();
+        $products = Product::all();
+        $pelanggan = Pelanggan::all();
+        return view('produk_transaksi.detail', ['Produk_Transaksi' => $Produk_Transaksi,'Product' => $products, 'Pelanggan' => $pelanggan]);
     }
 
     /**
@@ -102,11 +109,10 @@ class TransaksiController extends Controller
     public function edit($id)
     {
         // Menampilkan detail data dengan menemukan berdasarkan Nim Mahasiswa untuk diedit
-        $Produk_Transaksi = Produk_Transaksi::with('produk')->where('id', $id)->first();
-        $Produk_Transaksi = Produk_Transaksi::with('pelanggan')->where('id_pelanggan', $id_pelanggan)->first();
+        $Produk_Transaksi = Produk_Transaksi::with('pelanggan')->where('id', $id)->first();
         $products = Product::all();
         $pelanggan = Pelanggan::all();
-        return view('produk_transaksi.edit', ['Produk_Transaksi' => $Produk_Transaksi]);
+        return view('produk_transaksi.edit', ['Produk_Transaksi' => $Produk_Transaksi,'Product' => $products, 'Pelanggan' => $pelanggan]);
     }
 
     /**
@@ -120,7 +126,6 @@ class TransaksiController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
-            'id' => 'required',
             'produk_id' => 'required',
             'pelanggan_id' => 'required',
             'tanggal' => 'required',
@@ -158,13 +163,13 @@ class TransaksiController extends Controller
     }
 
     public function cetak_pdf($id){
-        // $products = Produk_Transaksi::with('produk')
-        //     ->where('produk_id', $id)
-        //     ->first();
-        $produk_transaksi = Produk_Transaksi::with('pelanggan')
-            ->where('pelanggan_id', $id)
+        $products = Produk_Transaksi::with('produk')
+            ->where('id', $id)
             ->get();
-        $pdf = PDF::loadview('produk_transaksi.transaksi_pdf', compact('produk_transaksi'));
+        $produk_transaksi = Produk_Transaksi::with('pelanggan')
+            ->where('id', $id)
+            ->get();
+        $pdf = PDF::loadview('produk_transaksi.transaksi_pdf', compact('produk_transaksi', 'products'));
         return $pdf->stream();
     }
 }

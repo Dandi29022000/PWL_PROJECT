@@ -50,21 +50,24 @@ class PetugasController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->file('image')){
-            $image_name = $request->file('image')->store('images', 'public');
-        }
-
         // Melakukan validasi data
         $request->validate([
-            'id_petugas' => 'required',
             'nama_petugas' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'file|image|mimes:jpeg,png,jpg',
             'alamat' => 'required',
             'no_telepon' => 'required',
         ]);
 
         // Fungsi eloquent untuk menambah data
-        Petugas::create($request->all());
+        if ($request->file('gambar')) {
+            $image_name = $request->file('gambar')->store('images', 'public');
+        }
+            Petugas::create([
+                'nama_petugas'             => $request->nama_petugas,
+                'gambar'                   => $image_name,
+                'alamat'                   => $request->alamat,
+                'no_telepon'               => $request->no_telepon,
+            ]);
 
         // Jika data berhasil ditambahkan, akan kembali ke halaman utama
         return redirect()->route('petugas.index')
@@ -108,7 +111,6 @@ class PetugasController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
-            'id_petugas' => 'required',
             'nama_petugas' => 'required',
             'gambar' => 'required',
             'alamat' => 'required',
@@ -116,14 +118,17 @@ class PetugasController extends Controller
         ]);
 
         // Fungsi eloquent untuk mengupdate data inputan kita
-        $petugas = Petugas::find($id_petugas)->update($request->all());
-        
-        if($petugas->gambar && file_exists(storage_path('app/public/' . $petugas->gambar))){
-            \Storage::delete('public/' . $petugas->gambar);
+        if($request->gambar && file_exists(storage_path('app/public/' . $request->gambar))){
+            \Storage::delete('public/' . $request->gambar);
         }
-
-        $image_name = $request->file('image')->store('images', 'public');
-        $petugas->gambar = $image_name;
+        
+        $image_name = $request->file('gambar')->store('images', 'public');
+        $update = Petugas::find($id_petugas);
+        $update->nama_petugas = $request->get('nama_petugas');
+        $update->gambar = $image_name;
+        $update->alamat = $request->get('alamat');
+        $update->no_telepon = $request->get('no_telepon');
+        $update->save();
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
         return redirect()->route('petugas.index')

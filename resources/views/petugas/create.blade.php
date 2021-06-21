@@ -38,13 +38,8 @@
                             </ul>
                         </div>
                         @endif
-                        <form method="POST" action="{{ route('petugas.store') }}" id="myForm">
+                        <form method="POST" action="{{ route('petugas.store') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group">
-                                <label for="id_petugas">Id Petugas</label>
-                                <input type="text" name="id_petugas" class="form-control" id="id_petugas" aria-describedby="id_petugas" >
-                            </div>
-
                             <div class="form-group">
                                 <label for="nama_petugas">Nama Petugas</label>
                                 <input type="text" name="nama_petugas" class="form-control" id="nama_petugas" aria-describedby="nama_petugas" >

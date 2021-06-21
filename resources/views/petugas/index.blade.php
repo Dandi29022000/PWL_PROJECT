@@ -66,9 +66,9 @@
                                 <td>{{ $Petugas->alamat }}</td>
                                 <td>{{ $Petugas->no_telepon }}</td>
                                 <td>
-                                    <form action="{{ route('petugas.destroy', $Petugas->id_petugas ) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data barang?')">
-                                    <a class="btn btninfo" href="{{ route('petugas.show', $Petugas->id_petugas ) }}">Show</a>
-                                    <a class="btn btnprimary" href="{{ route('petugas.edit', $Petugas->id_petugas ) }}">Edit</a>
+                                    <form action="{{ route('petugas.destroy', $Petugas->id_petugas ) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data petugas?')">
+                                    <a class="btn btn-info" href="{{ route('petugas.show', $Petugas->id_petugas ) }}">Show</a>
+                                    <a class="btn btn-primary" href="{{ route('petugas.edit', $Petugas->id_petugas ) }}">Edit</a>
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Hapus</button>

@@ -17,5 +17,5 @@ class Petugas extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_petugas', 'nama_petugas','alamat','no_telepon'];
+    protected $fillable = ['nama_petugas', 'gambar','alamat','no_telepon'];
 }

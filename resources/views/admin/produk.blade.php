@@ -55,10 +55,7 @@
                                 <td>{{ $Product->price }}</td>
                                 <td>{{ $Product->weigth }}</td>
                                 <td>
-                                    <form action="{{ route('produk.destroy', $srt->id ) }}" method="POST">
-                                        <a class="btn btn-primary"
-                                            href="{{ route('admin.acc-produk',$srt->id) }}"><i
-                                                class="bi bi-check2"></i></a>
+                                    <form action="{{ route('produk.destroy', $Product->id ) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger"><i

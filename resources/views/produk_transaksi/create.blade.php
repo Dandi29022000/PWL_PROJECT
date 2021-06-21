@@ -41,11 +41,6 @@
                         <form method="POST" action="{{ route('produk_transaksi.store') }}" id="myForm">
                             @csrf
                             <div class="form-group">
-                                <label for="id">Id Transaksi</label>
-                                <input type="text" name="id" class="form-control" id="id" aria-describedby="id">
-                            </div>
-
-                            <div class="form-group">
                                 <label for="produk_id">Nama Produk</label>
                                 <select name="produk_id" id="produk_id" class="form-control">
                                     <option selected disabled>Pilih Produk</option>
@@ -67,7 +62,8 @@
 
                             <div class="form-group">
                                 <label for="tanggal">Tanggal</label>
-                                <input type="text" name="tanggal" class="form-control" id="tanggal" aria-describedby="tanggal">
+                                <input type="date" name="tanggal" class="form-control" id="tanggal" aria-describedby="tanggal" placeholder="dd-mm-yyyy" 
+                                value="" min="1997-01-01" max=<?php echo date('Y-m-d'); ?> placeholder="Pilih Tanggal">
                             </div>
 
                             <div class="form-group">

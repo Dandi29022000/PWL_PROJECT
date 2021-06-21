@@ -70,12 +70,13 @@
                                 <td>{{ $Transaksi->qty }}</td>
                                 <td>{{ $Transaksi->total_bayar }}</td>
                                 <td>
-                                    <form action="{{ route('produk_transaksi.destroy', $Transaksi->id ) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data barang?')">
-                                    <a class="btn btninfo" href="{{ route('produk_transaksi.show', $Transaksi->id ) }}">Show</a>
-                                    <a class="btn btnprimary" href="{{ route('produk_transaksi.edit', $Transaksi->id ) }}">Edit</a>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                    <form action="{{ route('produk_transaksi.destroy', $Transaksi->id ) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data transaksi?')">
+                                        <a class="btn btn-info" href="{{ route('produk_transaksi.show', $Transaksi->id ) }}">Show</a>
+                                        <a class="btn btn-primary" href="{{ route('produk_transaksi.edit', $Transaksi->id ) }}">Edit</a>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        <a class="btn btn-warning" href="{{ route('produk_transaksi.cetak_pdf',  $Transaksi->id) }}">Cetak</a>
                                     </form>
                                 </td>
                             </tr>

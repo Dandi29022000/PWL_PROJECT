@@ -11,8 +11,8 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><b>Id Transaksi : </b>{{$Produk_Transaksi->id}}</li>
-                        <li class="list-group-item"><b>Kelas: </b>{{$Produk_Transaksi->produk->name}}</li>
-                        <li class="list-group-item"><b>Kelas: </b>{{$Produk_Transaksi->pelanggan->nama_pelanggan}}</li>
+                        <li class="list-group-item"><b>Nama Produk: </b>{{$Produk_Transaksi->produk->name}}</li>
+                        <li class="list-group-item"><b>Nama Pelanggan : </b>{{$Produk_Transaksi->pelanggan->nama_pelanggan}}</li>
                         <li class="list-group-item"><b>Tanggal : </b>{{$Produk_Transaksi->tanggal}}</li>
                         <li class="list-group-item"><b>Harga : </b>{{$Produk_Transaksi->harga}}</li>
                         <li class="list-group-item"><b>Qty : </b>{{$Produk_Transaksi->qty}}</li>

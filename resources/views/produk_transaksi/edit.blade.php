@@ -24,16 +24,11 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="id">Id Transaksi</label>
-                        <input type="text" name="id" class="form-control" id="id" value="{{ $Produk_Transaksi->id }}"  aria-describedby="id">
-                    </div>
-
-                    <div class="form-group">
                         <label for="produk_id">Nama Produk</label>
                         <select name="produk_id" id="produk_id" class="form-control">
                             <option selected disabled>Pilih Produk</option>
-                            @foreach($products as $produk)
-                                <option value="{{ $produk->id }}">{{ $Produk_Transaksi->produk_id == $produk->id ? 'selected': ''}}>{{ $produk->name }}</option>
+                            @foreach($Product as $pd)
+                                <option value="{{ $pd->id }}">{{ $Produk_Transaksi->produk_id == $pd->id ? 'selected': ''}}>{{ $pd->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -42,8 +37,8 @@
                         <label for="pelanggan_id">Nama Pelanggan</label>
                         <select name="pelanggan_id" id="pelanggan_id" class="form-control">
                             <option selected disabled>Pilih Pelanggan</option>
-                            @foreach($pelanggan as $pelanggan)
-                                <option value="{{ $pelanggan->id_pelanggan }}">{{ $Produk_Transaksi->pelanggan_id == $pelanggan->id_pelanggan ? 'selected': ''}}>{{ $pelanggan->nama_pelanggan }}</option>
+                            @foreach($Pelanggan as $pl)
+                                <option value="{{ $pl->id_pelanggan }}">{{ $Produk_Transaksi->pelanggan_id == $pl->id_pelanggan ? 'selected': ''}}>{{ $pl->nama_pelanggan }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -69,7 +64,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('pelanggan.index') }}" class="btn btn-danger">KEMBALI</a>
+                    <a href="{{ route('produk_transaksi.index') }}" class="btn btn-danger">KEMBALI</a>
                     </form>
                 </div>
             </div>

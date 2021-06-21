@@ -55,7 +55,6 @@ class ProdukController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
-            'id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'image' => 'file|image|mimes:jpeg,png,jpg',
@@ -119,7 +118,6 @@ class ProdukController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
-            'id' => 'required',
             'name' => 'required',
             'description' => 'required',
             'image' => 'required',
@@ -138,8 +136,8 @@ class ProdukController extends Controller
         $update->name = $request->get('name');
         $update->description = $request->get('description');
         $update->image = $image_name;
-        $update->price = $price->get('price');
-        $update->weigth = $weigth->get('weigth'); 
+        $update->price = $request->get('price');
+        $update->weigth = $request->get('weigth'); 
         $update->save();
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama

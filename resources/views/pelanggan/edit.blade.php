@@ -20,33 +20,28 @@
                     </div>
                     @endif
 
-                    <form method="post" action="{{ route('pelanggan.update', $Pelanggan->id_pelanggan) }}" id="myForm">
+                    <form method="post" action="{{ route('pelanggan.update', $Pelanggan->id_pelanggan) }}" id="myForm" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="id">Id Pelanggan</label>
-                        <input type="text" name="id" class="form-control" id="id" value="{{ $Pelanggan->id_pelanggan }}" ariadescribedby="id" >
+                        <label for="nama_pelanggan">Nama Pelanggan</label>
+                        <input type="text" name="nama_pelanggan" class="form-control" id="nama_pelanggan" value="{{ $Pelanggan->nama_pelanggan }}" ariadescribedby="nama_pelanggan" >
                     </div>
 
                     <div class="form-group">
-                        <label for="name">Nama Pelanggan</label>
-                        <input type="text" name="name" class="form-control" id="id" value="{{ $Pelanggan->nama_pelanggan }}" ariadescribedby="name" >
+                        <label for="gambar">Gambar</label>
+                        <input type="file" name="gambar" class="form-control" id="gambar" value="{{ $Pelanggan->gambar }}" ariadescribedby="gambar" >
+                        <img width="150px" src="{{asset('storage/'.$Pelanggan->gambar)}}" alt="">
                     </div>
 
                     <div class="form-group">
-                        <label for="image">Gambar</label>
-                        <input type="file" name="image" class="form-control" id="image" value="{{ $Pelanggan->gambar }}" ariadescribedby="image" >
-                        <img width="150px" src="{{asset('images/'.$Pelanggan->gambar)}}" alt="">
+                        <label for="alamat">Alamat</label>
+                        <input type="text" name="alamat" class="form-control" id="alamat" value="{{ $Pelanggan->alamat }}" ariadescribedby="alamat" >
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Alamat</label>
-                        <input type="text" name="price" class="form-control" id="price" value="{{ $Pelanggan->alamat }}" ariadescribedby="price" >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="weigth">Telepon</label>
-                        <input type="text" name="weigth" class="form-control" id="weigth" value="{{ $Pelanggan->telepon }}" ariadescribedby="weigth" >
+                        <label for="no_telepon">Telepon</label>
+                        <input type="text" name="no_telepon" class="form-control" id="no_telepon" value="{{ $Pelanggan->no_telepon }}" ariadescribedby="no_telepon" >
                     </div>
 
                     <button type="submit" class="btn btn-primary">Simpan</button>

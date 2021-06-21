@@ -24,11 +24,6 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="id">Id Produk</label>
-                        <input type="text" name="id" class="form-control" id="id" value="{{ $Product->id }}" ariadescribedby="id" >
-                    </div>
-
-                    <div class="form-group">
                         <label for="name">Nama Produk</label>
                         <input type="text" name="name" class="form-control" id="id" value="{{ $Product->name }}" ariadescribedby="name" >
                     </div>
@@ -41,7 +36,7 @@
                     <div class="form-group">
                         <label for="image">Gambar</label>
                         <input type="file" name="image" class="form-control" id="image" value="{{ $Product->image }}" ariadescribedby="image" >
-                        <img width="200px" src="{{asset('images/'.$Product->image)}}" alt="">
+                        <img width="200px" src="{{asset('storage/'.$Product->image)}}" alt="">
                     </div>
 
                     <div class="form-group">

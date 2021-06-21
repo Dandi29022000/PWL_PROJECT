@@ -42,11 +42,6 @@
                         <form method="POST" action="{{ route('produk.store') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="id">Id Produk</label>
-                                <input type="text" name="id" class="form-control" id="id" aria-describedby="id" >
-                            </div>
-
-                            <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" class="form-control" id="name" aria-describedby="name" >
                             </div>

@@ -17,7 +17,7 @@ class CreateProdukTransaksiTable extends Migration
             $table->id();
             $table->unsignedBigInteger('produk_id');
             $table->integer('pelanggan_id');
-            $table->string('tanggal', 10);
+            $table->date('tanggal');
             $table->integer('harga');
             $table->integer('qty');
             $table->integer('total_bayar');

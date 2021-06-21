@@ -50,21 +50,25 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->file('image')){
-            $image_name = $request->file('image')->store('images', 'public');
-        }
-
         // Melakukan validasi data
         $request->validate([
-            'id_pelanggan' => 'required',
             'nama_pelanggan' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'file|image|mimes:jpeg,png,jpg',
             'alamat' => 'required',
             'no_telepon' => 'required',
         ]);
 
         // Fungsi eloquent untuk menambah data
-        Pelanggan::create($request->all());
+        if ($request->file('gambar')) 
+        {
+            $image_name = $request->file('gambar')->store('images', 'public');
+            Pelanggan::create([
+                'nama_pelanggan'           => $request->nama_pelanggan,
+                'gambar'                   => $image_name,
+                'alamat'                   => $request->alamat,
+                'no_telepon'               => $request->no_telepon,
+            ]);
+        }
 
         // Jika data berhasil ditambahkan, akan kembali ke halaman utama
         return redirect()->route('pelanggan.index')
@@ -108,7 +112,6 @@ class PelangganController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
-            'id_pelanggan' => 'required',
             'nama_pelanggan' => 'required',
             'gambar' => 'required',
             'alamat' => 'required',
@@ -116,14 +119,15 @@ class PelangganController extends Controller
         ]);
 
         // Fungsi eloquent untuk mengupdate data inputan kita
-        $pelanggan = Pelanggan::find($id_pelanggan)->update($request->all());
+        $pelanggan = Pelanggan::find($id_pelanggan);
 
         if($pelanggan->gambar && file_exists(storage_path('app/public/' . $pelanggan->gambar))){
             \Storage::delete('public/' . $pelanggan->gambar);
         }
 
-        $image_name = $request->file('image')->store('images', 'public');
+        $image_name = $request->file('gambar')->store('images', 'public');
         $pelanggan->gambar = $image_name;
+        $pelanggan->save();
 
         // Jika data berhasil diupdate, akan kembali ke halaman utama
         return redirect()->route('pelanggan.index')

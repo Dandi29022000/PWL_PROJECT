@@ -17,7 +17,7 @@ class Product extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','image','description','price','weigth'];
+    protected $fillable = ['id', 'name', 'image', 'description', 'price', 'weigth'];
 
     public function produktransaksi(){
         return $this->hasMany(Produk_Transaksi::class);

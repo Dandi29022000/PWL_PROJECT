@@ -52,6 +52,7 @@ class UserPelangganController extends Controller
     {
         // Melakukan validasi data
         $request->validate([
+            'id_pelanggan' => 'required',
             'nama_pelanggan' => 'required',
             'gambar' => 'file|image|mimes:jpeg,png,jpg',
             'alamat' => 'required',
@@ -63,6 +64,7 @@ class UserPelangganController extends Controller
         {
             $image_name = $request->file('gambar')->store('images', 'public');
             Pelanggan::create([
+                'id_pelanggan'             => $request->id_pelanggan,
                 'nama_pelanggan'           => $request->nama_pelanggan,
                 'gambar'                   => $image_name,
                 'alamat'                   => $request->alamat,

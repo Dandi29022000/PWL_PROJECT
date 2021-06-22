@@ -41,6 +41,11 @@
                         <form method="POST" action="{{ route('user_pelanggan.store') }}" id="myForm" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
+                                <label for="id_pelanggan">Id Pelanggan</label>
+                                <input type="text" name="id_pelanggan" class="form-control" id="id_pelanggan" aria-describedby="id_pelanggan" required="required">
+                            </div>  
+                            
+                            <div class="form-group">
                                 <label for="nama_pelanggan">Nama Pelanggan</label>
                                 <input type="text" name="nama_pelanggan" class="form-control" id="nama_pelanggan" aria-describedby="nama_pelanggan" required="required">
                             </div>
